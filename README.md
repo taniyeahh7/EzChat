@@ -1,4 +1,4 @@
-# EzChat- # IlluminaHack
+# EzChat- IlluminaHack
 Won second prize in YANTRA-ILLUMINA hackathon and deeply appreciated by sponsors.
 
 # Problem Statement
