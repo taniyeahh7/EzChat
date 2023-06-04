@@ -1,5 +1,5 @@
 # EzChat
-Won second prize in YANTRA-ILLUMINA hackathon and deeply appreciated by sponsors.
+Won **second prize** in YANTRA-ILLUMINA hackathon and deeply appreciated by sponsors.
 
 # Problem Statement
 Government websites can be difficult to navigate and use, especially for the majority of Indian civilians due to complexity of the website and pre-requisite of experience with websites. 
@@ -10,8 +10,8 @@ Filling forms can take very long durations since even one mistake asks for resub
 We've made a chatbot that can answer all questions about the government from When does my driver's license expire? to How do I apply for passport?
 The chatbot will be available on all domains of goverment websites and once a user is logged in, would connect to the database to answer the user specific questions as well! 
 
-We are working on integrating google api for speech to text and text to speech for further enhancing user friendliness.
-The above said feature will also help in translating the queries and responses in 120+ languages.
+We are working on integrating Google API for speech to text and text to speech for further enhancing user friendliness.
+The above said feature will also help in translating the queries and responses in **120+ languages**.
 
 With this chatbot every field can be taken line-by-line which will ensure that progress is being saved and if there is any error it is indicated immediately.
 
