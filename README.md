@@ -13,7 +13,7 @@ The chatbot will be available on all domains of goverment websites and once a us
 We are working on integrating Google API for speech to text and text to speech for further enhancing user friendliness.
 The above said feature will also help in translating the queries and responses in **120+ languages**.
 
-With this chatbot every field can be taken line-by-line which will ensure that progress is being saved and if there is any error it is indicated immediately.
+With this chatbot every field of a form can be taken line-by-line which will ensure that progress is being saved and if there is any error it is indicated immediately.
 
 # Prototype
 ![image](https://github.com/taniyeahh7/IlluminaHack/assets/96697355/cd39c4b5-098b-48c4-a57e-c9c7530822a3)
