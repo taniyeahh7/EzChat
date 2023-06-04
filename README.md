@@ -1,5 +1,5 @@
 # EzChat
-Won **second prize** in YANTRA-ILLUMINA hackathon and deeply appreciated by sponsors.(prototype attached)
+Won **second prize** in YANTRA-ILLUMINA hackathon and deeply appreciated by sponsors. (prototype attached)
 
 # Problem Statement
 Government websites can be difficult to navigate and use, especially for the majority of Indian civilians due to complexity of the website and pre-requisite of experience with websites. 
