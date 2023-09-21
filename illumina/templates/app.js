@@ -1,4 +1,5 @@
 class Chatbox {
+	//constructor
 	constructor() {
 		this.args = {
 			openButton: document.querySelector(".chatbox__button"),
@@ -36,9 +37,9 @@ class Chatbox {
 		}
 	}
 
-	onSendButton(chatbox) {
+	onSendButton(chatbox, text1) {
 		var textField = chatbox.querySelector("input");
-		let text1 = textField.value;
+		text1 = text1 || textField.value;
 		if (text1 === "") {
 			return;
 		}
@@ -56,7 +57,7 @@ class Chatbox {
 		})
 			.then((r) => r.json())
 			.then((r) => {
-				let msg2 = { name: "Sam", message: r.answer };
+				let msg2 = { name: "Aarav", message: r.answer };
 				this.messages.push(msg2);
 				this.updateChatText(chatbox);
 				textField.value = "";
@@ -74,7 +75,7 @@ class Chatbox {
 			.slice()
 			.reverse()
 			.forEach(function (item, index) {
-				if (item.name === "Sam") {
+				if (item.name === "Aarav") {
 					html +=
 						'<div class="messages__item messages__item--visitor">' +
 						item.message +
@@ -90,7 +91,64 @@ class Chatbox {
 		const chatmessage = chatbox.querySelector(".chatbox__messages");
 		chatmessage.innerHTML = html;
 	}
+
+	//additional functions
+	openChatbox() {
+		const { chatBox } = this.args;
+		chatBox.classList.add("chatbox--active");
+		this.messages.push({
+			name: "Aarav",
+			message: "Hello! How can I assist you?",
+		});
+		this.updateChatText(chatBox);
+		this.startSpeechRecognition();
+	}
+
+	startSpeechRecognition() {
+		const recognition = new webkitSpeechRecognition();
+		recognition.continuous = true;
+		recognition.lang = "en-US";
+		recognition.interimResults = false;
+		recognition.maxAlternatives = 1;
+
+		recognition.addEventListener("result", (event) => {
+			const transcript =
+				event.results[event.results.length - 1][0].transcript.trim();
+			this.updateChatText(this.args.chatBox);
+			this.onSendButton(this.args.chatBox, transcript); // Send the user's query
+		});
+
+		recognition.start();
+	}
 }
 
 const chatbox = new Chatbox();
 chatbox.display();
+
+//
+//
+//
+//SPEECH - TEXT FUNCTIONALITY----------------
+
+// Speech to text functionality
+const voiceBtn = document.querySelector("#text");
+
+const recognition = new webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.lang = "en-US";
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
+
+recognition.start();
+
+// Listen for recognition results
+recognition.addEventListener("result", (event) => {
+	const transcript =
+		event.results[event.results.length - 1][0].transcript.trim();
+	console.log(event.results);
+	// Check if the recognized speech contains "aarav"
+	if (transcript.includes("hello")) {
+		console.log(transcript);
+		chatbox.openChatbox();
+	}
+});
