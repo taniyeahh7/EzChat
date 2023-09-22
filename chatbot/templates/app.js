@@ -8,7 +8,6 @@ class Chatbox {
 			chatBox: document.querySelector(".chatbox__support"),
 			sendButton: document.querySelector(".send__button"),
 		};
-		this.speak = false;
 		this.state = false;
 		this.messages = [];
 	}
@@ -30,9 +29,9 @@ class Chatbox {
 
 	toggleState(chatbox) {
 		this.state = !this.state;
-
 		// show or hides the box
 		if (this.state) {
+			this.textToSpeech("Hi. My name is Aarav. How can I assist you?");
 			chatbox.classList.add("chatbox--active");
 		} else {
 			chatbox.classList.remove("chatbox--active");
@@ -45,7 +44,6 @@ class Chatbox {
 		if (text1 === "") {
 			return;
 		}
-
 		let msg1 = { name: "User", message: text1 };
 		this.messages.push(msg1);
 
@@ -61,6 +59,7 @@ class Chatbox {
 			.then((r) => {
 				let msg2 = { name: "Aarav", message: r.answer };
 				this.messages.push(msg2);
+				this.textToSpeech(r.answer);
 				this.updateChatText(chatbox);
 				textField.value = "";
 			})
@@ -91,36 +90,58 @@ class Chatbox {
 			});
 		const chatmessage = chatbox.querySelector(".chatbox__messages");
 		chatmessage.innerHTML = html;
-		const latestResponse = this.messages[this.messages.length - 1].message;
-
-		if (this.speak) {
-			this.textToSpeech(latestResponse);
-		}
+		const lastMessage = this.messages[this.messages.length - 1];
+		this.textToSpeech(lastMessage.message);
 	}
 
 	//text to speech functionality
 	textToSpeech(text) {
 		let utterance = new SpeechSynthesisUtterance(text);
-		window.speechSynthesis.cancel();
-		// Set the voice name to "Google US English"
-		for (let voice of window.speechSynthesis.getVoices()) {
-			if (voice.name === "Google US English") {
-				utterance.voice = voice;
-				break;
-			}
-		}
-		window.speechSynthesis.speak(utterance);
+		console.log("text-to-speech" + text);
+
+		// Fetch the language
+		fetch("http://localhost:5000/getLang", {
+			method: "POST",
+			body: JSON.stringify({ message: text }),
+			mode: "cors",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((r) => r.json())
+			.then((data) => {
+				const language = data.language;
+				console.log(language);
+				window.speechSynthesis.cancel();
+				utterance.lang = language;
+
+				// Set the voice name to a voice that matches the language
+				const voices = window.speechSynthesis.getVoices();
+				for (let voice of voices) {
+					if (voice.lang === language) {
+						utterance.voice = voice;
+						break;
+					}
+				}
+
+				window.speechSynthesis.speak(utterance);
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
 	}
 
 	//speech to text functionality
 	openChatbox() {
 		const { chatBox } = this.args;
-		chatBox.classList.add("chatbox--active");
+		if (!chatBox.classList.contains("chatbox--active")) {
+			chatBox.classList.add("chatbox--active");
+		}
 		this.messages.push({
 			name: "Aarav",
 			message: "Hello! How can I assist you?",
 		});
-		this.speak = true;
+		this.textToSpeech("Hi. My name is Aarav. How can I assist you?");
 		this.updateChatText(chatBox);
 		this.startSpeechRecognition();
 	}
