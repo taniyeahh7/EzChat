@@ -97,6 +97,7 @@ class Chatbox {
 			this.textToSpeech(latestResponse);
 		}
 	}
+
 	//text to speech functionality
 	textToSpeech(text) {
 		let utterance = new SpeechSynthesisUtterance(text);
@@ -111,7 +112,7 @@ class Chatbox {
 		window.speechSynthesis.speak(utterance);
 	}
 
-	//additional functions
+	//speech to text functionality
 	openChatbox() {
 		const { chatBox } = this.args;
 		chatBox.classList.add("chatbox--active");
